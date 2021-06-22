@@ -23,6 +23,7 @@ ArrayList<Agent> flights;    // A380 flights
 PVector fLLOrig; //Origin Lat/Lon
 PVector fLLDest; //Destination Lat/Lon
 PVector timeHue; //duration is x in min, takeoff time is y in min, hue is z. This is an object so functions can alter the value.
+int hex;
 
 void openFlightTable() {
 
@@ -45,6 +46,7 @@ void openFlightTable() {
     fLLOrig = new PVector();
     fLLDest = new PVector();
     timeHue = new PVector();
+    hex = #ff00b4;
     currentLine = new String("");
     
     //All this try/catch stuff seems like garbage because I already check for this stuff.
@@ -78,42 +80,42 @@ void getFlightTableLine()  {
     fLLDest.y = Float.parseFloat(lineData[10]);
     timeHue.x = Float.parseFloat(lineData[16]) - Float.parseFloat(lineData[15]);
     timeHue.y = Float.parseFloat(lineData[15]);
-    timeHue.z = 0; //Read the airline and decide color. Airline is column 4
+    hex = #ff00b4; //Read the airline and decide color. Airline is column 4
     switch(lineData[4]) {
-      case "Emirates Airline":
-        timeHue.z = 0;
+      case "linode":
+        hex = #02b159;
         break;
-      case "Air France":
-        timeHue.z = 30;
+      case "google":
+        hex = #1a73e8;
         break;
-      case "Singapore Airlines":
-        timeHue.z = 60;
+      case "aws":
+        hex = #d13212;
         break;
-      case "British Airways":
-        timeHue.z = 90;
+      case "azure":
+        hex = #ffb900;
         break;
-      case "Lufthansa":
-        timeHue.z = 120;
+      case "digitalocean":
+        hex = #0069ff;
         break;
-      case "Qatar Airways":
-        timeHue.z = 150;
+      case "vultr":
+        hex = #ff00b4;
         break;
       default:
-        timeHue.z = 200;
+        hex = #ff00b4;
         break;
     }
   }
   else
   {
     //Restart the table here. This seems to work although if issues arise, they might be here.
-    //This doesn't reset flights already in the air, but still looks good.
+    //This doesn"t reset flights already in the air, but still looks good.
     openFlightTable();
   }
 }
 
 void checkTakeoff() {
   if(timeHue.y <= ftime) {
-    spawnFlight(fLLOrig.x, fLLOrig.y, fLLDest.x, fLLDest.y, timeHue.x*fpMin, int(timeHue.z));
+    spawnFlight(fLLOrig.x, fLLOrig.y, fLLDest.x, fLLDest.y, timeHue.x*fpMin, hex);
     getFlightTableLine();
   }
   

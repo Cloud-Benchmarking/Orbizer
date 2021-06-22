@@ -82,7 +82,7 @@ void mousePressed() {
     // Spawn a flight!
     PVector latlon = new PVector();
     latlon = windowXYtolatlon(mouseX, mouseY);
-    spawnFlight(42.3, -71, latlon.x, latlon.y, 180, 255);
+    spawnFlight(42.3, -71, latlon.x, latlon.y, 180, #ff00b4);
   }
 }
 

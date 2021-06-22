@@ -1,7 +1,7 @@
 class Agent {
   PVector location, alatlon, llOrig, llDest;
   int w, h;
-  float hue;
+  int hue;
   
   float bearing, speed, time, duration;
   boolean willEnd;
@@ -15,7 +15,7 @@ class Agent {
     llDest = new PVector(0,0);
     bearing = 90;
     speed = 0;
-    hue = 0;
+    hue = #ff00b4;
     duration = 0; //Duration will be measured in frames, with a possible timescale option later
     willEnd = false;
   }
@@ -29,7 +29,7 @@ class Agent {
     speed = random(0.1,0.5); //speed in degrees per second
 
     willEnd = false;
-    hue = random(0, 255);
+    hue = #ff00b4;
     
     location = latlontoCanvasXY(alatlon);
   }
@@ -78,14 +78,14 @@ class Agent {
   }
 
   void drawSimple() {
-     canvas.fill(hue, 255, 255);
+     canvas.fill(hue);
      canvas.noStroke();
      canvas.ellipse(location.x, location.y, 5, 5);
   }
   
   void drawMode() {
-    canvas.colorMode(HSB);
-    canvas.fill(hue, 255, 255, 100);
+    canvas.colorMode(RGB);
+    canvas.fill(hue);
     canvas.colorMode(RGB);
     canvas.stroke(255, 200);
     canvas.strokeWeight(1);
@@ -107,9 +107,9 @@ class Agent {
   
   void drawRoute(int segments) {
     // dynamic alpha to fade route line in and out during take off and landing
-    float alpha = 50.0 * (1 - abs(time - 0.5*duration)/(0.5*duration) ); 
-    canvas.colorMode(HSB);
-    canvas.stroke(hue, 255, 255, alpha);
+    float alpha = 100.0 * (1 - abs(time - 0.5*duration)/(0.5*duration) ); 
+    canvas.colorMode(RGB);
+    canvas.stroke(hue, alpha);
     canvas.colorMode(RGB);
     canvas.strokeWeight(4);
     drawLine(llOrig.x, llOrig.y,llDest.x,llDest.y, segments);
